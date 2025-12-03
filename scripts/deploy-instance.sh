@@ -102,7 +102,7 @@ create_instance_structure() {
     print_success "Instance directory structure created at $instance_dir"
 }
 
-# Function to create docker-compose file
+# Function to create docker compose file
 create_docker_compose() {
     local instance_name=$1
     local app_port=$2
@@ -129,8 +129,8 @@ create_docker_compose() {
     export DB_PASSWORD="${DB_PASSWORD:-root}"
     export NODE_ENV="${NODE_ENV:-production}"
 
-    # Create docker-compose.yml from template
-    envsubst < "$PROJECT_ROOT/docker-compose.template.yml" > "$instance_dir/docker-compose.yml"
+    # Create docker compose.yml from template
+    envsubst < "$PROJECT_ROOT/docker compose.template.yml" > "$instance_dir/docker compose.yml"
 
     print_success "Docker Compose file created"
 }
@@ -218,7 +218,7 @@ deploy_instance() {
     # Create environment file
     create_env_file "$instance_name" "$app_port" "$db_port" "$company_name" "$admin_email" "$admin_password"
 
-    # Create docker-compose file
+    # Create docker compose file
     create_docker_compose "$instance_name" "$app_port" "$db_port"
 
     # Customize migration files before deployment
@@ -243,7 +243,7 @@ deploy_instance() {
     cd "$instance_dir"
 
     # Build and start containers (environment variables are loaded from .env automatically)
-    docker-compose up -d --build
+    docker compose up -d --build
 
     # Wait for containers to be ready
     print_status "Waiting for containers to start..."

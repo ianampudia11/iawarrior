@@ -155,8 +155,8 @@ customize_migration_file() {
     sed -i "s/BotHive/${escaped_company_name}/g" "$target_file"
     
     # Verify replacements
-    local admin_placeholders=$(grep -c "admin@powerchatapp\.net" "$target_file" 2>/dev/null || echo "0")
-    local company_placeholders=$(grep -c "BotHive" "$target_file" 2>/dev/null || echo "0")
+    local admin_placeholders=$(grep -c "admin@powerchatapp\.net" "$target_file" 2>/dev/null | tr -d '\r\n' || echo "0")
+    local company_placeholders=$(grep -c "BotHive" "$target_file" 2>/dev/null | tr -d '\r\n' || echo "0")
     
     if [ "$admin_placeholders" -eq 0 ]; then
         print_success "✓ All admin email placeholders replaced"
