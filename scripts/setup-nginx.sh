@@ -5,8 +5,23 @@
 
 set -e
 
-DOMAIN="chat.ianampudia.com"
-EMAIL="admin@ianampudia.com"
+# Check for arguments or prompt user
+if [ -z "$1" ]; then
+    read -p "Enter your domain (e.g., chat.example.com): " DOMAIN
+else
+    DOMAIN=$1
+fi
+
+if [ -z "$2" ]; then
+    read -p "Enter admin email (for SSL): " EMAIL
+else
+    EMAIL=$2
+fi
+
+if [ -z "$DOMAIN" ] || [ -z "$EMAIL" ]; then
+    echo "Error: Domain and Email are required."
+    exit 1
+fi
 GREEN='\033[0;32m'
 NC='\033[0m'
 

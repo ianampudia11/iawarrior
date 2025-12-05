@@ -5,10 +5,26 @@
 
 set -e
 
-DOMAIN="chat.ianampudia.com"
+# Check for arguments or prompt user
+if [ -z "$1" ]; then
+    read -p "Enter your domain (e.g., chat.example.com): " DOMAIN
+else
+    DOMAIN=$1
+fi
+
+if [ -z "$2" ]; then
+    read -p "Enter admin email (for SSL): " EMAIL
+else
+    EMAIL=$2
+fi
+
+if [ -z "$DOMAIN" ] || [ -z "$EMAIL" ]; then
+    echo "Error: Domain and Email are required."
+    exit 1
+fi
+
 REPO_URL="https://github.com/ianampudia11/iawarrior.git"
 APP_DIR="/opt/iawarrior-tech"
-EMAIL="admin@ianampudia.com" # Change this if needed
 
 # Colors
 GREEN='\033[0;32m'

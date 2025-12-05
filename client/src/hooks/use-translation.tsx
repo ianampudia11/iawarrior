@@ -45,8 +45,8 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
   const [translations, setTranslations] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(true);
 
-  const getStoredLanguage = (): string => {
-    return localStorage.getItem('preferred-language') || 'en';
+  const getStoredLanguage = (): string | null => {
+    return localStorage.getItem('preferred-language');
   };
 
   const storeLanguage = (languageCode: string) => {
@@ -118,10 +118,10 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
 
 
 
-        const isOnAuthPage = window.location.pathname === '/auth' || 
-                            window.location.pathname === '/login' || 
-                            window.location.pathname === '/register';
-        
+        const isOnAuthPage = window.location.pathname === '/auth' ||
+          window.location.pathname === '/login' ||
+          window.location.pathname === '/register';
+
         if (!isOnAuthPage) {
           try {
             const testRes = await fetch('/api/user', {
@@ -164,10 +164,10 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
 
 
 
-        const isOnAuthPage = window.location.pathname === '/auth' || 
-                            window.location.pathname === '/login' || 
-                            window.location.pathname === '/register';
-        
+        const isOnAuthPage = window.location.pathname === '/auth' ||
+          window.location.pathname === '/login' ||
+          window.location.pathname === '/register';
+
         if (!isOnAuthPage) {
           try {
             const testRes = await fetch('/api/user', {
@@ -214,7 +214,7 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
         if (availableLanguages.length > 0) {
           const storedLanguageCode = getStoredLanguage();
           const preferredLanguage =
-            availableLanguages.find(lang => lang.code === storedLanguageCode) ||
+            (storedLanguageCode ? availableLanguages.find(lang => lang.code === storedLanguageCode) : undefined) ||
             availableLanguages.find(lang => lang.isDefault === true) ||
             availableLanguages[0];
 
@@ -222,7 +222,7 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
             await changeLanguageWithLanguages(preferredLanguage.code, availableLanguages);
           }
         } else {
-          
+
           setIsLoading(false);
         }
       } catch (error) {

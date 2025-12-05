@@ -13734,5 +13734,161 @@
     {
         "key": "landing.trust.soc2_compliant",
         "value": "Cumplimiento SOC 2"
+    },
+    {
+        "key": "landing.features.title",
+        "value": "Todo lo que necesitas para gestionar la comunicación con tus clientes"
+    },
+    {
+        "key": "landing.features.subtitle",
+        "value": "Funciones potentes diseñadas para optimizar tu flujo de trabajo y mejorar las relaciones con los clientes"
+    },
+    {
+        "key": "landing.features.multi_channel.title",
+        "value": "Mensajería Multicanal"
+    },
+    {
+        "key": "landing.features.multi_channel.description",
+        "value": "Conecta WhatsApp, Email, Facebook, Instagram y Telegram en una bandeja de entrada unificada. Nunca pierdas un mensaje de cliente de nuevo."
+    },
+    {
+        "key": "landing.features.ai_automation.title",
+        "value": "Automatización con IA"
+    },
+    {
+        "key": "landing.features.ai_automation.description",
+        "value": "Chatbots inteligentes con integración de OpenAI, Claude y Gemini. Automatiza respuestas manteniendo conversaciones humanas."
+    },
+    {
+        "key": "landing.features.team_collaboration.title",
+        "value": "Colaboración en Equipo"
+    },
+    {
+        "key": "landing.features.team_collaboration.description",
+        "value": "Bandeja de entrada de equipo en tiempo real con control de acceso basado en roles. Colabora sin problemas con los miembros de tu equipo."
+    },
+    {
+        "key": "landing.features.flow_builder.title",
+        "value": "Constructor de Flujos Visual"
+    },
+    {
+        "key": "landing.features.flow_builder.description",
+        "value": "Interfaz de arrastrar y soltar para crear flujos de trabajo de automatización sofisticados y viajes de clientes sin codificar."
+    },
+    {
+        "key": "landing.features.analytics.title",
+        "value": "Analíticas Avanzadas"
+    },
+    {
+        "key": "landing.features.analytics.description",
+        "value": "Información completa e informes para optimizar la comunicación con tus clientes y rastrear métricas de rendimiento."
+    },
+    {
+        "key": "landing.features.security.title",
+        "value": "Seguridad Empresarial"
+    },
+    {
+        "key": "landing.features.security.description",
+        "value": "Seguridad de nivel bancario con cifrado de extremo a extremo, estándares de cumplimiento y protección de datos para tu negocio."
+    },
+    {
+        "key": "landing.social_proof.title",
+        "value": "Con la confianza de empresas en todo el mundo"
+    },
+    {
+        "key": "landing.social_proof.subtitle",
+        "value": "Únete a miles de empresas que confían en {{appName}} para su comunicación con clientes"
+    },
+    {
+        "key": "landing.stats.active_users",
+        "value": "Usuarios Activos"
+    },
+    {
+        "key": "landing.stats.uptime",
+        "value": "Tiempo de Actividad"
+    },
+    {
+        "key": "landing.stats.messages_processed",
+        "value": "Mensajes Procesados"
+    },
+    {
+        "key": "landing.stats.support",
+        "value": "Soporte"
+    },
+    {
+        "key": "landing.footer.description",
+        "value": "La plataforma completa de comunicación con clientes para empresas modernas."
+    },
+    {
+        "key": "landing.footer.product",
+        "value": "Producto"
+    },
+    {
+        "key": "landing.footer.company",
+        "value": "Empresa"
+    },
+    {
+        "key": "landing.footer.support",
+        "value": "Soporte"
+    },
+    {
+        "key": "landing.footer.features",
+        "value": "Características"
+    },
+    {
+        "key": "landing.footer.pricing",
+        "value": "Precios"
+    },
+    {
+        "key": "landing.footer.integrations",
+        "value": "Integraciones"
+    },
+    {
+        "key": "landing.footer.api",
+        "value": "API"
+    },
+    {
+        "key": "landing.footer.about",
+        "value": "Sobre nosotros"
+    },
+    {
+        "key": "landing.footer.blog",
+        "value": "Blog"
+    },
+    {
+        "key": "landing.footer.careers",
+        "value": "Carreras"
+    },
+    {
+        "key": "landing.footer.contact",
+        "value": "Contacto"
+    },
+    {
+        "key": "landing.footer.help_center",
+        "value": "Centro de Ayuda"
+    },
+    {
+        "key": "landing.footer.documentation",
+        "value": "Documentación"
+    },
+    {
+        "key": "landing.footer.status",
+        "value": "Estado"
+    },
+    {
+        "key": "landing.footer.privacy_policy",
+        "value": "Política de Privacidad"
+    },
+    {
+        "key": "landing.footer.terms_of_service",
+        "value": "Términos de Servicio"
+    },
+    {
+        "key": "landing.footer.cookie_policy",
+        "value": "Política de Cookies"
+    },
+    {
+        "key": "landing.footer.all_rights_reserved",
+        "value": "Todos los derechos reservados."
     }
 ]
