@@ -3,8 +3,8 @@ import { hashPassword } from '../server/auth';
 import { db } from '../server/db';
 
 async function resetAdminPassword() {
-    const email = 'admin@ianampudia.com';
-    const newPassword = 'admin123';
+    const email = process.argv[2] || 'admin@ianampudia.com';
+    const newPassword = process.argv[3] || 'admin123';
 
     console.log(`Resetting password for ${email}...`);
 
