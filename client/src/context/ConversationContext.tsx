@@ -131,17 +131,8 @@ function filterMessengerFromConversations(conversations: any[]): any[] {
       return false;
     }
 
-
-
     if (conversation.channelConnection?.channelType === 'messenger') {
       return false;
-    }
-
-
-
-    if (conversation.channelId) {
-
-
     }
 
     return true;
@@ -182,8 +173,6 @@ function filterMessengerFromContacts(contacts: any[]): any[] {
       return false;
     }
 
-
-
     if (contact.identifierType === 'messenger') {
       return false;
     }
@@ -223,7 +212,6 @@ function deduplicateContactsByPhone(contacts: any[]): any[] {
         phoneMap.set(normalizedPhone, contact);
       }
     } else if (!normalizedPhone) {
-
       phoneMap.set(`no-phone-${contact.id}`, contact);
     }
   });
@@ -310,80 +298,13 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
   }, []);
 
   useEffect(() => {
-    const handleNewMessage = (data: any) => {
-      if (!data || !data.message) return;
-
-      const message = data.message;
-      const conversationId = message.conversationId;
-
-      // 1. Play sound and show toast if it's an incoming message (not from us)
-      // and we are not currently focusing on this conversation window or window is blurred
-      const isIncoming = message.direction === 'inbound';
-
-      if (isIncoming) {
-        // Play sound
-        notificationAudio.currentTime = 0;
-        notificationAudio.play().catch(e => console.log('Audio autoplay blocked', e));
-
-        // Show toast if we are not looking at this conversation
-        if (activeConversationId !== conversationId) {
-          toast({
-            title: t('notifications.new_message', 'New Message'),
-            description: message.content || t('notifications.media_message', 'Media message'),
-            duration: 3000,
-            onClick: () => {
-              setActiveConversationId(conversationId);
-              navigate('/inbox');
-            }
-          });
-        }
-      }
-
-      // 2. Real-time Sorting: Move conversation to top
-      setAllConversations(prev => {
-        const index = prev.findIndex(c => c.id === conversationId);
-        if (index === -1) {
-          // If conversation not found (new?), we might need to refetch or add it. 
-          // For now, let's refetch to be safe if it's missing
-          refetchConversations();
-          return prev;
-        }
-
-        const conversation = { ...prev[index] };
-
-        // Update preview
-        conversation.lastMessageAt = message.createdAt;
-        conversation.lastMessage = message.content;
-
-        // Remove from current position and add to top
-        const newConversations = [...prev];
-        newConversations.splice(index, 1);
-        return [conversation, ...newConversations];
-      });
-
-    };
-
-    const unsubscribe = onMessage('newMessage', handleNewMessage);
-    return () => {
-      if (unsubscribe) unsubscribe();
-    };
-  }, [onMessage, activeConversationId, notificationAudio, toast, t, navigate, refetchConversations]);
-
-
-  useEffect(() => {
     const handleNotificationClick = (data: any) => {
-
-
       if (data && data.conversationId) {
-
         window.focus();
-
 
         const currentPath = window.location.pathname;
         if (currentPath !== '/inbox' && currentPath !== '/') {
-
           navigate('/inbox');
-
 
           setTimeout(() => {
             setActiveConversationId(data.conversationId);
@@ -397,17 +318,12 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
           return; // Exit early to let the timeout handle conversation selection
         }
 
-
-
         setActiveConversationId(data.conversationId);
-
 
         const conversation = [...allConversations, ...allGroupConversations].find(conv => conv.id === data.conversationId);
         if (conversation && conversation.channelId) {
-
           setActiveChannelId(conversation.channelId);
         }
-
 
         toast({
           title: t('notifications.conversation_opened', 'Conversation Opened'),
@@ -416,11 +332,10 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
       }
     };
 
-
     registerNotificationClickHandler('conversation', handleNotificationClick);
 
     return () => {
-
+      // Cleanup if necessary
     };
   }, [setActiveConversationId, setActiveChannelId, navigate, allConversations, allGroupConversations, toast, t]);
 
@@ -433,30 +348,24 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
       return false;
     }
 
-
     if (user.isSuperAdmin) {
       return true;
     }
-
 
     if (conversation.companyId !== null && conversation.companyId !== user.companyId) {
       console.warn(`[Security] Conversation ${conversation.id} belongs to different company (${conversation.companyId} vs ${user.companyId})`);
       return false;
     }
 
-
     if (canViewAllConversations()) {
-
       return true;
     } else if (canOnlyViewAssignedConversations()) {
-
       const canView = conversation.assignedToUserId === user.id;
       if (!canView) {
         console.warn(`[Security] Conversation ${conversation.id} not assigned to user ${user.id} (assigned to: ${conversation.assignedToUserId})`);
       }
       return canView;
     }
-
 
     console.warn(`[Security] User ${user.id} has no permission to view conversation ${conversation.id}`);
     return false;
@@ -645,13 +554,8 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
 
   const conversations = useMemo(() => {
     const rawConversations = allConversations;
-
-
     const filteredGroupChats = filterGroupChatsFromConversations(rawConversations);
-
-
     const filteredMessenger = filterMessengerFromConversations(filteredGroupChats);
-
     return deduplicateConversationsByContact(filteredMessenger);
   }, [allConversations]);
 
@@ -701,8 +605,6 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
   useEffect(() => {
     const selectedContactId = localStorage.getItem('selectedContactId');
     const selectedChannelType = localStorage.getItem('selectedChannelType');
-
-
 
     if (conversationsPagination.loading || authLoading || !user) {
       return;
@@ -872,17 +774,10 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
 
   const contacts = useMemo(() => {
     const rawContacts = Array.isArray(contactsResponse) ? contactsResponse : [];
-
-
     const filteredGroupChats = filterGroupChatsFromContacts(rawContacts);
-
-
     const filteredMessenger = filterMessengerFromContacts(filteredGroupChats);
-
     return deduplicateContactsByPhone(filteredMessenger);
   }, [contactsResponse]);
-
-
 
   const enrichConversationWithContact = useCallback((conv: any) => {
     if (!conv || conv.isGroup) return conv;
@@ -895,7 +790,6 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
     }
     return conv;
   }, [contacts]);
-
 
   useEffect(() => {
     if (!Array.isArray(contacts) || contacts.length === 0) return;
@@ -962,7 +856,6 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
   };
 
   const fetchMessages = async (conversationId: number, page: number = 1, append: boolean = false) => {
-
     if (!user || authLoading) {
       return;
     }
@@ -981,8 +874,6 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
       const isGroup = isGroupConversation(conversationId);
 
       const result = await messageCache.loadMessages(conversationId, page, 25, isGroup);
-
-
 
       setMessages(prev => {
         const existingMessages = prev[conversationId] || [];
@@ -1007,7 +898,6 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
         }
       }));
     } catch (err: any) {
-
       const isSubscriptionError = err.message?.includes('402') || err.message?.includes('SUBSCRIPTION_EXPIRED');
 
       if (!isSubscriptionError) {
@@ -1184,10 +1074,7 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
         audio.play().catch(() => {
         });
 
-
         if (browserNotifications && (message.direction === 'incoming' || message.direction === 'inbound')) {
-
-
           const conversation = [...allConversations, ...allGroupConversations].find(conv => conv.id === message.conversationId);
           if (conversation) {
             const isGroup = conversation.isGroup || conversation.groupJid;
@@ -1201,14 +1088,8 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
               messagePreview = `${message.type.charAt(0).toUpperCase() + message.type.slice(1)} message`;
             }
 
-
-
             showMessageNotification(senderName, messagePreview, message.conversationId, isGroup).catch(console.error);
-          } else {
-
           }
-        } else {
-
         }
       }
     });
@@ -1256,7 +1137,6 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
         return;
       }
 
-
       if (!canUserViewConversation(updatedConversation)) {
         console.warn(`[Security] Blocked conversation update for conversation ${updatedConversation.id} - insufficient permissions`);
         return;
@@ -1299,7 +1179,6 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
 
       if (!contactId || !companyId) return;
 
-
       setAllConversations(prev =>
         prev.filter(conv => conv.contactId !== contactId)
       );
@@ -1307,7 +1186,6 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
       setAllGroupConversations(prev =>
         prev.filter(conv => conv.contactId !== contactId)
       );
-
 
       setMessages(prev => {
         const updatedMessages: { [key: string]: any[] } = { ...prev };
@@ -1321,7 +1199,6 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
         });
         return updatedMessages;
       });
-
 
       queryClient.invalidateQueries({ queryKey: ['/api/conversations'] });
       queryClient.invalidateQueries({ queryKey: ['/api/contacts'] });
@@ -1435,7 +1312,6 @@ export function ConversationProvider({ children }: ConversationProviderProps) {
       if (!newConversation || !newConversation.id) {
         return;
       }
-
 
       if (!canUserViewConversation(newConversation)) {
         console.warn(`[Security] Blocked new conversation ${newConversation.id} - insufficient permissions`);
